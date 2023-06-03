@@ -7,7 +7,7 @@ Please use at your own risk, no warranty it won't melt your drives or cause havo
 
 This script started as a winter holidy project when trying to do some performance measurements on zfs pools to use with high speed networking.
 
-Basically it takes a bunch of disks provided to it and combines them into various pool layouts, creates datasets on the pool, runs dd or fio tests on them and then destroys everything. Rinse and Repeat.
+# Basically it takes a bunch of disks provided to it and combines them into various pool layouts, creates datasets on the pool, runs dd or fio tests on them (potentially many many many tests due to fio blocksize, iops, qd, read, write, zfs blocksize, sync/async, compression permutations) and then destroys everything. Rinse and Repeat.
 Tons of options eg to run sync/async, use l2arc, slog (or multiple of each), create database statements to insert results into pgsql and mysql (not tsmdb's yet)
 
 It was originally created in 2019/20 so does not support metadata devices yet.
