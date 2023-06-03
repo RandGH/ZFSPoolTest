@@ -30,10 +30,9 @@ Maybe I'll do some cleanup in the script and here later. Or if someone else want
 Main Disk config file is pool_test.coonfig. Add all drives that are to be used in tests in there (or define directly in perl script)
 
 
-# This is the disklist for pool_test.pl
-#
-# Please configure the disks you want to test in here.
-# 
+#This is the disklist for pool_test.pl
+#Please configure the disks you want to test in here.
+ 
 # Use a format like 
 # <type>=disk-identifier
 # <type>:disk-identifier
