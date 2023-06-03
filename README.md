@@ -27,12 +27,39 @@ Configuration options from perl script - never got around to implement parameter
 Just dumping the current content with al the commented options. 
 Maybe I'll do some cleanup in the script and here later. Or if someone else wants to...
 
-#############################################
-# configure script behaviour here
-#############################################
-#############################
+Main Disk config file is pool_test.coonfig. Add all drives that are to be used in tests in there (or define directly in perl script)
+
+
+# This is the disklist for pool_test.pl
+#
+# Please configure the disks you want to test in here.
+# 
+# Use a format like 
+# <type>=disk-identifier
+# <type>:disk-identifier
+#
+# valid types are 
+#   data  - for regular pool drives
+#   slog1 or slog2  - for slog devices (2 maximum)
+#   l2arc1 or l2arc2  - for l2arc devices (2 maximum)
+#
+# comments are allowed both on separate lines as well as after a diskid
+# disks can be given as device (adaX, daX, /dev/daX...), as partition, as gptid (the latter two have been tested less thorougly)
+# devices without type specification will be treated as type data - this syntax is supported for legacy reasons only
+
+
+#slog1=da1
+#l2arc1=da2
+data=/dev/ada0
+data=/dev/ada1
+data=/dev/ada2
+data=/dev/ada3
+data=/dev/ada5
+
+pool_test.pl Config options
+
 # Pool configuration
-#############################
+
 # Currently supported device to pool layout combinations
 #   type		single	mirror-2	mirror-3	stripe
 #		single		o				x					x					o
@@ -58,25 +85,19 @@ Maybe I'll do some cleanup in the script and here later. Or if someone else want
 #note this means a lot of pools when used in combination with layout=individual below
 #
 #
-###################################################################################
 
 
-###############################################################################################################################
-###############################################################################################################################
-###############################################################################################################################
+
 # USER configurable parts 
 # most users will want to change below this block
-###############################################################################################################################
-###############################################################################################################################
-###############################################################################################################################
 
 my $userpool_do=0; #set to 1 if you want to use a self created pool to be used for tests (with creating datasets), no automated pool creation. Needs 'userpool=' entry in pool_test.config
 #not implemented yet:
 my $testsonly_do=0; #set to 1 if you want only to run fio or dd tests on a given device or file 
 
-######################
+
 #DISKS TO USE IN TESTS (only if config file is not present) 
-######################
+
 #these values will only be used if no alternative way of passing disks has been selected (i.e. no config file pool_test.config is present and has data)
 #my $uservar_slogdev ="gptid/33b5d616-692d-11e9-9421-a4bf01059e9a";
 my @uservar_datadisks=('da0','da1','da2','da3');
@@ -84,13 +105,11 @@ my $uservar_slogdev ="/dev/pmem0";
 my $uservar_slogdev2 ="slog2";
 my $uservar_l2arcdev ="l2arc1";
 my $uservar_l2arcdev2 ="l2arc2";
-######################
 # END DISKS TO USE IN TESTS 
-######################
 
-######################
+
+
 #LOG AND SCREEN output 
-######################
 #log verbosity - 4 is very very verbose
 my $verbose=4;  #level 1-4 (4=debug)
 
@@ -394,14 +413,5 @@ $DBDataTypes{"pgsql"}{"FLOAT"}="FLOAT";
 #valid sqllite create and insert statement
 #note primary key needs to be moved to the end
 
-
-
-
-###############################################################################################################################
-###############################################################################################################################
-###############################################################################################################################
 # END of USER configurable parts 
 # most users will want to leave the rest alone starting here
-###############################################################################################################################
-###############################################################################################################################
-###############################################################################################################################
