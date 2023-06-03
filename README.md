@@ -51,7 +51,8 @@ data=/dev/ada5
 
 # pool_test.pl Config options
 
-#Pool configuration
+###Pool configuration
+```
 Currently supported device to pool layout combinations
   type		single	mirror-2	mirror-3	stripe
   single	  o	  x		  x		  o
@@ -65,7 +66,7 @@ Currently supported device to pool layout combinations EXTENDED
     z1		  x	  -		  x
     z2		  x	  -		  x
     z3		  x	  -		  x
-
+```
 #Pool layout configuration - default enables all possible pool configurations, including unsafe ones (eg single vdev)
 #my @uservar_vdev_type=('single','z1','z2','z3');
 #my @Uservar_vdev_redundancy=('single','stripe','mirror');
@@ -185,7 +186,8 @@ my $uservar_vdev_layout_full=1;
 my $uservar_vdev_layout_individual=0;
 my $uservar_vdev_layout_staggered=0;
 
-# Cache & Slog options
+## Cache & Slog options
+```
 #if we allow 2 l2arc and 2 slog devices these are the possible combinations that these can have
         #l2arc	#slog	type_l2arc	type_slog
 	  0	  0	  none		  none
@@ -204,6 +206,7 @@ my $uservar_vdev_layout_staggered=0;
 	  2	  1	  stripe	  single
 	  2	  2	  stripe	  mirror
 	  2	  2	  stripe	  stripe
+```
 #This will create n pools for l2arc times m pools for slog times all the different dataset and test options - use with care
 #none=No cache/log/device
 #sf = single slog/cache, uses the first given device if it exists (slog1/l2arc1)
@@ -248,7 +251,7 @@ my $fio_runs_per_test=1; #if we want to run multiple runs per actual test to get
 my $fio_file_size="10G"; 
 my $fio_time_based="1"; #set to 1 if you want only runtime based runs, else runs will be based on combination of size and time (given size is used until time is up)
 my $fio_runtime = 60; #set runtime to either limit duration of a test or (together with file size=0) to run timebased
-
+```
  #read       Sequential reads.
     #write        Sequential writes.
     #trim        Sequential trims (Linux block devices and SCSI character devices only).
@@ -258,7 +261,7 @@ my $fio_runtime = 60; #set runtime to either limit duration of a test or (togeth
     #rw,readwrite        Sequential mixed reads and writes.
     #randrw        Random mixed reads and writes.
     #trimwrite        Sequential trim+write sequences. Blocks will be trimmed first, then the same blocks will be written to.
-
+```
 
 #Option 1  - loop over RW/IOD, #JOBS and all other options
 #my @fio_testtype = ('read','write', 'randread', 'randwrite');
