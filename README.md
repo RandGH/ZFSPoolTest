@@ -2,7 +2,7 @@
 A perl script to perform automated tests on zfs pools.
 Please note i started with this and its working, but at some point I stopped working on it. It may have bugs, it has debugging comments, it has a large list of ideas that I never implemented.
 
-Please use at your own risk, no warranty it won't melt your drives or cause havoc on existing pools. It shouldnt, but if you misonfigure it ...
+Please use at your own risk, no warranty it won't melt your drives or cause havoc on existing pools. It shouldnt, but if you misconfigure it ...
 
 
 This script started as a winter holiday project when trying to do some performance measurements on zfs pools to use with high speed networking.
