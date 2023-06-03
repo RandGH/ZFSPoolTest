@@ -253,76 +253,75 @@ note this means a lot of pools when used in combination with layout=individual b
     #trimwrite        Sequential trim+write sequences. Blocks will be trimmed first, then the same blocks will be written to.
 ```
 
-#Option 1  - loop over RW/IOD, #JOBS and all other options
-#my @fio_testtype = ('read','write', 'randread', 'randwrite');
-#my @fio_testtype = ('write');
-#my @fio_testtype = ('read','write', 'randread', 'randwrite', 'readwrite','randrw');
-my @fio_testtype = ('write',  'randwrite');
-#my @fio_testtype = ('read','write','randread','randwrite');
-#my @fio_testtype = ('write','randwrite');
-#my @fio_test_rw_pcts = (20,30,50,70); #we specify read percentage (rwmixread)
-my @fio_test_rw_pcts = (0,30,100); #we specify read percentage (rwmixread)
-#my @fio_test_rw_pcts = (0); #we specify read percentage (rwmixread)
-#my @fio_bs = ("4k","8k","32k","64k","128k","512K","1M","4M","8M");
-my @fio_bs = ("64K","128K","1M");
-#my @fio_bs = ("4k");
-#my @fio_iodepth = (1,2,4,8,16,32,64,128,256,512,1024);
-my @fio_iodepth = (1,16,32,64);
-#my @fio_iodepth = (16);
-#my @fio_numjobs = (1,2,4,8,16,32);
-my @fio_numjobs = (1,4,8,16);
-#my @fio_numjobs = (16);
+### Option 1  - loop over RW/IOD, #JOBS and all other options
+- #my @fio_testtype = ('read','write', 'randread', 'randwrite');
+- #my @fio_testtype = ('write');
+- #my @fio_testtype = ('read','write', 'randread', 'randwrite', 'readwrite','randrw');
+- my @fio_testtype = ('write',  'randwrite');
+- #my @fio_testtype = ('read','write','randread','randwrite');
+- #my @fio_testtype = ('write','randwrite');
+- #my @fio_test_rw_pcts = (20,30,50,70); #we specify read percentage (rwmixread)
+- my @fio_test_rw_pcts = (0,30,100); #we specify read percentage (rwmixread)
+- #my @fio_test_rw_pcts = (0); #we specify read percentage (rwmixread)
+- #my @fio_bs = ("4k","8k","32k","64k","128k","512K","1M","4M","8M");
+- my @fio_bs = ("64K","128K","1M");
+- #my @fio_bs = ("4k");
+- #my @fio_iodepth = (1,2,4,8,16,32,64,128,256,512,1024);
+- my @fio_iodepth = (1,16,32,64);
+- #my @fio_iodepth = (16);
+- #my @fio_numjobs = (1,2,4,8,16,32);
+- my @fio_numjobs = (1,4,8,16);
+- #my @fio_numjobs = (16);
 
-#Option 2 -  loop over predefined test groups
-#my @fio_userdefined_tests = (
-#"--bs=4K --rw=randwrite --iodepth=1 --numjobs=2",
-#"--bs=64K --rw=randwrite --iodepth=1 --numjobs=2",
-#"--bs=64K --rw=rw --iodepth=1 --numjobs=2",
-#"--bs=1M --rw=rw --iodepth=1 --numjobs=2"
-#);
-my @fio_userdefined_tests = (
-"--bs=64K --rw=randwrite --iodepth=1 --numjobs=2",
-"--bs=1M --rw=rw --iodepth=1 --numjobs=2"
-);
-my $fio_ioengine='posixaio';
-my $fio_sleeptime=30; #add a sleeptime between two tests (in seconds)
-my $jsonppbinary="json_pp"; # default for FreeBSD/FreeNas - for Linux thats jsonpp
+### Option 2 -  loop over predefined test groups
+- #my @fio_userdefined_tests = (
+- #"--bs=4K --rw=randwrite --iodepth=1 --numjobs=2",
+- #"--bs=64K --rw=randwrite --iodepth=1 --numjobs=2",
+- #"--bs=64K --rw=rw --iodepth=1 --numjobs=2",
+- #"--bs=1M --rw=rw --iodepth=1 --numjobs=2"
+- #);
+- my @fio_userdefined_tests = (
+- "--bs=64K --rw=randwrite --iodepth=1 --numjobs=2",
+- "--bs=1M --rw=rw --iodepth=1 --numjobs=2"
+- );
+- my $fio_ioengine='posixaio';
+- my $fio_sleeptime=30; #add a sleeptime between two tests (in seconds)
+- my $jsonppbinary="json_pp"; # default for FreeBSD/FreeNas - for Linux thats jsonpp
 
 
 ## TEST: DD
-
-my $dd_do=0; #set to 1 if you want the dd tests to run
-my $dd_concurrent_jobs_do=1; #set to 1 if you want to run the dd with multiple parallel processes
-my $dd_runs_per_test=1; #if we want to run multiple runs per actual test to get the average of 3 or 5. Set number of tests here
-#my $dd_file_size="100G"; # for fast disks/multiple vdevs/instances || note this size will be written per zfs option per dataset, so at least 2x per given recordsize (sync/async)
-my $dd_file_size="1G";
-#my @dd_blocksizes = ("4k","8k","64k","128k","512k","1M","4M"); default value
-my @dd_blocksizes = ("64k","1M");
-#my @dd_num_jobs = (1,2,4,8,16,32); #how many processes to spawn (note each will do the nth part of total size) - default value
-my @dd_num_jobs = (1);
-my $dd_sleeptime=1; #add a sleeptime between two tests (in seconds)
+- my $dd_do=0; #set to 1 if you want the dd tests to run
+- my $dd_concurrent_jobs_do=1; #set to 1 if you want to run the dd with multiple parallel processes
+- my $dd_runs_per_test=1; #if we want to run multiple runs per actual test to get the average of 3 or 5. Set number of tests here
+- #my $dd_file_size="100G"; # for fast disks/multiple vdevs/instances || note this size will be written per zfs option per dataset, so at least 2x per given recordsize (sync/async)
+- my $dd_file_size="1G";
+- #my @dd_blocksizes = ("4k","8k","64k","128k","512k","1M","4M"); default value
+- my @dd_blocksizes = ("64k","1M");
+- #my @dd_num_jobs = (1,2,4,8,16,32); #how many processes to spawn (note each will do the nth part of total size) - default value
+- my @dd_num_jobs = (1);
+- my $dd_sleeptime=1; #add a sleeptime between two tests (in seconds)
 
 ## Database options
 	
-my $useDB="pgsql"; # alter this to use another DB type (used for generating created db & add data to db scripts) - you can add new databases by adding appropriate datatypes 
-my $_dbname="pool_test"; # alter this to use another databse or schema. this is currently called with "use $_dbname" in MySQL style
-#Please note that VARCHAR, INT and Float are being used in the script. If you have another Datatype, this table can be used to convert from the script internal name to the DB specific name, eg if FLOAT is called Float64 in SQLSERVER then add 
-#a line like this my %DBDataTypes{"SQLSERVER"}{"FLOAT"}="FLOAT64";  (and set useDB to SQLSERVER). Make sure to define all types per database even if they are identical
-my %DBDataTypes;
-my %dbout; #for output
-$DBDataTypes{"MySQL"}{"STRING"}="VARCHAR";
-$DBDataTypes{"MySQL"}{"INT"}="INT";
-$DBDataTypes{"MySQL"}{"BIGINT"}="BIGINT";
-$DBDataTypes{"MySQL"}{"FLOAT"}="FLOAT";
-$DBDataTypes{"sqlite"}{"STRING"}="VARCHAR"; #treated as TEXT
-$DBDataTypes{"sqlite"}{"INT"}="INTEGER";
-$DBDataTypes{"sqlite"}{"BIGINT"}="INTEGER";
-$DBDataTypes{"sqlite"}{"FLOAT"}="REAL";
-$DBDataTypes{"pgsql"}{"STRING"}="VARCHAR"; 
-$DBDataTypes{"pgsql"}{"SMALLINT"}="SMALLINT";
-$DBDataTypes{"pgsql"}{"INT"}="INTEGER";
-$DBDataTypes{"pgsql"}{"BIGINT"}="BIGINT";
-$DBDataTypes{"pgsql"}{"FLOAT"}="FLOAT";
+- my $useDB="pgsql"; # alter this to use another DB type (used for generating created db & add data to db scripts) - you can add new databases by adding appropriate datatypes 
+- my $_dbname="pool_test"; # alter this to use another databse or schema. this is currently called with "use $_dbname" in MySQL style
+- #Please note that VARCHAR, INT and Float are being used in the script. If you have another Datatype, this table can be used to convert from the script internal name to the DB specific name, eg if FLOAT is called Float64 in SQLSERVER then add 
+- #a line like this my %DBDataTypes{"SQLSERVER"}{"FLOAT"}="FLOAT64";  (and set useDB to SQLSERVER). Make sure to define all types per database even if they are identical
+- my %DBDataTypes;
+- my %dbout; #for output
+- $DBDataTypes{"MySQL"}{"STRING"}="VARCHAR";
+- $DBDataTypes{"MySQL"}{"INT"}="INT";
+- $DBDataTypes{"MySQL"}{"BIGINT"}="BIGINT";
+- $DBDataTypes{"MySQL"}{"FLOAT"}="FLOAT";
+- $DBDataTypes{"sqlite"}{"STRING"}="VARCHAR"; #treated as TEXT
+- $DBDataTypes{"sqlite"}{"INT"}="INTEGER";
+- $DBDataTypes{"sqlite"}{"BIGINT"}="INTEGER";
+- $DBDataTypes{"sqlite"}{"FLOAT"}="REAL";
+- $DBDataTypes{"pgsql"}{"STRING"}="VARCHAR"; 
+- $DBDataTypes{"pgsql"}{"SMALLINT"}="SMALLINT";
+- $DBDataTypes{"pgsql"}{"INT"}="INTEGER";
+- $DBDataTypes{"pgsql"}{"BIGINT"}="BIGINT";
+- $DBDataTypes{"pgsql"}{"FLOAT"}="FLOAT";
 
-#valid sqllite create and insert statement
-#note primary key needs to be moved to the end
+- #valid sqllite create and insert statement
+- #note primary key needs to be moved to the end
