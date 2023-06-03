@@ -33,18 +33,18 @@ Main Disk config file is pool_test.coonfig. Add all drives that are to be used i
 #This is the disklist for pool_test.pl
 #Please configure the disks you want to test in here.
  
-# Use a format like 
-# <type>=disk-identifier
-# <type>:disk-identifier
+#Use a format like 
+#<type>=disk-identifier
+#<type>:disk-identifier
 #
-# valid types are 
-#   data  - for regular pool drives
-#   slog1 or slog2  - for slog devices (2 maximum)
-#   l2arc1 or l2arc2  - for l2arc devices (2 maximum)
+#valid types are 
+#data  - for regular pool drives
+#slog1 or slog2  - for slog devices (2 maximum)
+#l2arc1 or l2arc2  - for l2arc devices (2 maximum)
 #
-# comments are allowed both on separate lines as well as after a diskid
-# disks can be given as device (adaX, daX, /dev/daX...), as partition, as gptid (the latter two have been tested less thorougly)
-# devices without type specification will be treated as type data - this syntax is supported for legacy reasons only
+#comments are allowed both on separate lines as well as after a diskid
+#disks can be given as device (adaX, daX, /dev/daX...), as partition, as gptid (the latter two have been tested less thorougly)
+#devices without type specification will be treated as type data - this syntax is supported for legacy reasons only
 
 
 #slog1=da1
