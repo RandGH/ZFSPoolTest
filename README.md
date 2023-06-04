@@ -21,15 +21,28 @@ It was created on TNC11.x originally but its working on 13.0U5. I think it shoul
 Output are reports in csv format, or sql statements for a SQL DB.
 Always wanted to move the display to Grafana but never got around to it, but I've seen they have a sql plugin now, or CSV. Haven't tried.
 
-Discussion - https://forums.servethehome.com/index.php?threads/zfs-pool-test.40314/
+## Discussion
+https://forums.servethehome.com/index.php?threads/zfs-pool-test.40314/
 
+## Usage
+### Simple
+perl ./pool_test.pl
 
+### for longer runs
+nohup perl ./pool_test.pl &
+Logs to pool_test.pl.<pid>.log
 
-Configuration options from perl script - never got around to implement parameters...
-Just dumping the current content with al the commented options. 
-Maybe I'll do some cleanup in the script and here later. Or if someone else wants to...
+### Interact with the script
+- touch ./pool_test.pl.stop to stop processing gracefully
+- touch ./pool_test.pl.info to get runtime info on tests et al
+- touch ./pool_test.pl.report to get a current report file
+- touch ./pool_test.pl.loglevel1 ... ./pool_test.pl.loglevel4  to set loglevel to 1..4 
 
+Configuration options from perl script - never got around to implement parameters... Just dumping the current content with all the commented options. Maybe I'll do some cleanup in the script and here later. Or if someone else wants to...
+
+## Configuration
 **Main Disk config file is pool_test.config. Add all drives that are to be used in tests in there (or define directly in perl script)**
+**Walk through the options before you run the script. My defaults might not apply to you**
 
 This is the disklist for pool_test.pl
 Please configure the disks you want to test in here.
