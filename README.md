@@ -12,11 +12,13 @@ Tons of options eg to run sync/async, use l2arc, slog (or multiple of each), cre
 
 It was originally created in 2019/20 so does not support metadata devices yet.
 
-It was created on TNC11.x originally but its working on 13.0U5. I think it should also work on TNS. It should also work on other ZFS based systems. Might need to adjust json_pp to jsonpp on Linux
+It was created on TNC11.x originally but its working on 13.0U5. I think it should also work on TNS. 
+Note - it works on TNS 24.04 if you manually specify the disks in pool_test.config. disklist.pl is not working any more, commands have changed and it was never updated.
+It should also work on other ZFS based systems. 
 
 ## Dependencies
-- It needs json_pp to parse the fio results, included in TNC
-- Its using disklist.pl https://github.com/nephri/FreeNas-DiskList
+- It needs json_pp to parse the fio results, included in TNC/TNS
+- Its using disklist.pl https://github.com/nephri/FreeNas-DiskList  (outdated, set drives manually in pool_test.config)
 
 Output are reports in csv format, or sql statements for a SQL DB.
 Always wanted to move the display to Grafana but never got around to it, but I've seen they have a sql plugin now, or CSV. Haven't tried.
