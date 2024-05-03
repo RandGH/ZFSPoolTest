@@ -636,7 +636,7 @@ my @fio_userdefined_tests = (
 my $fio_ioengine='posixaio';
 
 my $fio_sleeptime=30; #add a sleeptime between two tests (in seconds)
-my $jsonppbinary="json_pp"; # default for FreeBSD/FreeNas - for Linux thats jsonpp
+my $jsonppbinary="json_pp"; # default 
 
 ######################
 # END TEST: FIO
@@ -821,6 +821,7 @@ sub _get_system_info
 			$_SystemInfo{cpu_freq}=sprintf("%.2f", $1/1000/1000/1000) if $_=~/^machdep.tsc_freq:\s(\d+)/;
 
 		}
+		#$jsonppbinary="json_pp"; # we don't override this any more
 	}
 	elsif ($^O=~/linux/)
 	{
@@ -840,7 +841,7 @@ sub _get_system_info
 		$_skip_disklistpl=1;
 		$_skip_disklist=1;
 		$user_rungstat=0; # turn off gstat
-		$jsonppbinary="./json_pp";		
+		#$jsonppbinary="json_pp"; # we don't override this any more
 	}
 	else
 	{
@@ -5511,7 +5512,7 @@ sub _do_cache_and_log_checks_extended
 		#we dont skip on 'none'
 
 
-		&_print_log (3, "Found device for option $_l2\n");
+		&_print_log (3, "Found device for option $_l2\n") unless ($_l2=~/^no$/);
 
 		foreach my $_sl (@user_slogoptions)
 		{
@@ -5551,7 +5552,7 @@ sub _do_cache_and_log_checks_extended
 				next unless $_devslog2exists;
 			}
 			#we dont skip on 'none'
-			&_print_log (3, "Found device for option $_sl\n");
+                        &_print_log (3, "Found device for option $_sl\n") unless ($_sl=~/^no$/);
 
 			#$_current_l2arcoption=$_l2;
 			#$_current_slogoption=$_sl;
